@@ -1,3 +1,17 @@
+This textfile contains my thought process/notes behind the changes and additions to the project plan.
+
+I made the name of the game "4-to-Connect" in order to avoid copyright infringement.
+I wrote the milestones section. The milestones may not be specific enough but it looks okay for now.
+For the risks I took away the "Someone drops course" part because it currently isn't relevent to our project. At least for now.
+TO-DO: Who is responsible for submitting deliverables? Who is responsible for checking if other members need help?
+I changed "An 6x5 board" to "A 6x5 board".
+I changed the stakeholders section, means of communication section and risks section to be in full sentences. I think that
+is required for the project plan.
+I added Class diagram and Case Diagram to the internal deliverables section becuase the project doesn't request them (I think).
+I may have made some more or less changes than this but this is what I remember I did. You can compare the changes to the master branch.
+
+
+
 Milestones:
 	- are points in time
 	- From the website:
@@ -9,9 +23,9 @@ Milestones:
 		- Final Presentation (Weeks 10 and 11 - November 22nd, November 29th)
 	- Must breakdown these milestones into detailed explanations
 	- Project Plan (October 14th)
-		- understand what each team member will be doing, when they will do it, and 		  how they will do it (for contributing to project)
+		- understand what each team member will be doing, when they will do it, and how they will do it (for contributing to project)
 		- each team member will know how to communicate with each other and our TA
-		- each team member will know potential problems that may arise and how to			  combat them
+		- each team member will know potential problems that may arise and how to combat them
 	- Design Review Presentation [Design Review Project] (October 21st)
 		- the specifics for building the software
 		- know what design patterns we will use for the project
@@ -25,7 +39,7 @@ Milestones:
 		- Documentation will be completed
 		- The game is fully implemented and ready for stakeholders
 	- Final Presentation (November 22nd)
-		- The project repository will contain a README that is well-worded and 		  interesting
-		- The README will contain the description of the game with screenshots and 		  its rules
-		- Also, how to install the game and its required hardware will be 		  		  explained
+		- The project repository will contain a README that is well-worded and interesting
+		- The README will contain the description of the game with screenshots and its rules
+		- Also, how to install the game and its required hardware will be explained
  
