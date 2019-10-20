@@ -1,5 +1,4 @@
 # TODO
-- Introduction slide <Calvin>
 - GUI slide
 - Conclusion slide, main class <Gen>
 - Setting out advancement
