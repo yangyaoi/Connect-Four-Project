@@ -1,4 +1,4 @@
-#TODO
+# TODO
 - Introduction slide <Calvin>
 - Conclusion slide, main class <Gen>
 - Meeting on 5:30pm Monday Oct 21th
