@@ -3,6 +3,10 @@
 - Conclusion slide, main class <Gen>
 - Setting out advancement
 - Meeting on 5:30pm Monday Oct 21th
+  
+# Code Commit
+- Please submit by Sunday night
+- Commit and push codes for each class to asignned branch, I will merge them after.
 
 # Connect-Four-Project
 - CSC290 Project rep
