@@ -6,6 +6,22 @@ from ConnectFourBoard import ConnectFourBoard
 
 class ConnectFourGUI():
     """A class for the graphical user interface of 4-to-Connect"""
+    BLUE = (0, 0, 255)
+    LIGHT_BLUE = (0, 0, 128)
+    BLACK = (0, 0, 0)
+    RED = (255, 0, 0)
+    YELLOW = (255, 255, 0)
+
+    SQUARESIZE = 100
+    NUM_COLS = 7
+    NUM_ROWS = 6
+    WIDTH = NUM_COLS*SQUARESIZE
+    HEIGHT = (1+NUM_ROWS)*SQUARESIZE
+    SIZE = (WIDTH, HEIGHT)
+
+    RADIUS = int(SQUARESIZE/2 - 5)
+    SCREEN = pygame.display.set_mode(SIZE)
+
 
     def __init__(self, board: ConnectFourBoard(6, 7)):
         """(ConnectFourGUI, ConnectFourBoard(int, int)) -> NoneType
@@ -108,7 +124,7 @@ class ConnectFourGUI():
         updates any screen when a button is clicked"""
         # if start button is clicked
         if (394 > mouse_position[0] > 306 and 217 > mouse_position[1] > 190):
-            self.screen.fill((110, 215, 180))
+            self.play_game()
 
         # if help button is clicked
         if (394 > mouse_position[0] > 306 and 274 > mouse_position[1] > 232):
@@ -116,7 +132,7 @@ class ConnectFourGUI():
 
         # if exit button is clicked
         if (394 > mouse_position[0] > 306 and 335 > mouse_position[1] > 295):
-            self.screen.fill((255, 255, 255))
+            self.exit_game()
 
     def start_game(self):
         """(ConnectFourGUI) -> NoneType
@@ -126,18 +142,48 @@ class ConnectFourGUI():
     def play_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the play screen"""
+        self.draw_board()
         return
 
     def exit_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the exit screen"""
+        self.screen.fill((255, 255, 255))
+        pygame.quit()
+        exit()
+
         return
 
     def upate_board(self, board: ConnectFourBoard):
         """(ConnectFourGUI, ConnectFourBoard) -> NoneType
         updates the board"""
         return
+    def draw_board(self):
+        """(ConnectFourGUI) -> NoneType
+        Draws the board for use by the game
+        To Do: 
+         - Draw different coloured circles based on
+        player input
+         - Make board look better :(...
+        """
 
+        for c in range(self.NUM_COLS):
+            for r in range(self.NUM_ROWS):
+                loc_size = (c*self.SQUARESIZE, (r+1)*self.SQUARESIZE, self.SQUARESIZE, self.SQUARESIZE)
+                pygame.draw.rect(self.SCREEN, self.BLUE, loc_size)
+                loc = (int((c+0.5)*self.SQUARESIZE), int((r+1.5)*self.SQUARESIZE))
+                pygame.draw.circle(self.SCREEN, self.BLACK, loc, self.RADIUS)
+        
+        # for c in range(self.NUM_COLS):
+        #     for r in range(self.NUM_ROWS):		
+        #         if self.board[r][c] == 1:
+        #             loc = (int((c+0.5)*self.SQUARESIZE), int((r+1.5)*self.SQUARESIZE))
+        #             pygame.draw.circle(self.SCREEN, self.RED, loc, self.RADIUS)
+        #         elif self.board[r][c] == -1: 
+        #             loc = (int((c+0.5)*self.SQUARESIZE), int((r+1.5)*self.SQUARESIZE))
+        #             pygame.draw.circle(self.SCREEN, self.YELLOW, loc, self.RADIUS)
+        pygame.display.update()
+        
 if __name__ == "__main__":
     pygame.init()
     gui = ConnectFourGUI(ConnectFourBoard(6, 7))
