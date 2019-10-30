@@ -27,7 +27,7 @@ class ConnectFourBoard():
         Player moves drop spot one column to the left. 
         """
         n = self.pointer-1
-        if valid_move():
+        if valid_move(n, 0):
             self.pointer--
         return
 
@@ -36,7 +36,7 @@ class ConnectFourBoard():
         Player moves drop spot one column to the right.
         """
         n = self.p1_pointer+1
-        if valid_move():
+        if valid_move(n, 0):
             self.p1_pointer++
         return
 
@@ -46,7 +46,7 @@ class ConnectFourBoard():
         placed in the lowest empty spot in that column.
         """ 
         rowIndex = 0
-        if valid_move(self.pointer):
+        if valid_move(self.pointer, 0):
             while (self.board[self.pointer])[rowIndex] == self.em:
                 rowIndex++
             if rowIndex < self.dim_col:
@@ -73,12 +73,34 @@ class ConnectFourBoard():
         and see if there is a row, column or diagonal of four
         consecutive pieces of the same player.
         """
-        return
+        for x in self.board:
+            for y in self.board[x]:
+                for dy in {-1, 0, 1}:
+                    for dx in {-1, 0, 1}:
+                        if alternation(x, y, dx, dy):
+                            return True
+                        pass
+        return False
 
-    def valid_move(self) -> bool:
+    def alternation(self, x: int, y: int, dx: int, dy: int) -> bool:
+        """
+        Helper function for check_for_win function
+        """
+        count = 0
+        if dx == 0 and dy == 0:
+            return False
+        else:
+            while count != 4 and valid_move(x, y):
+                if self.board[x][y] == self.turn:
+                    count++
+                    x += dx
+                    y += dy
+            return count == 4
+    
+    def valid_move(self, col: int, row: int) -> bool:
         """
         Check if the player’s requested drop position is in
         accordance to the game rules and fits in the nested list grid. 
         """
-        return
+        return 0 <= row and row < self.dim_row and 0 <= col and col < self.dim_col
 
