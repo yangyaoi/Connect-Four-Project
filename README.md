@@ -1,8 +1,8 @@
-# TODO
-
-# Code Commit
-- Please submit by Sunday night
-- Commit and push codes for each class to asignned branch, I will merge them after.
+# Important change to the work breakdown
+- Since we spread all responsibilities all functions of player class, Yao need something to work on
+- He wants to write some views for games and want to do code reviews
+- Gen will implement controller in main class
+- Please update each class to be compatible with mouse control
 
 # Connect-Four-Project
 - CSC290 Project rep
