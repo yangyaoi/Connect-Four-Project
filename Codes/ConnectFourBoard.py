@@ -12,7 +12,6 @@ class ConnectFourBoard():
         self.p1 = "P1"
         self.p2 = "P2"
         self.em = "EMPTY"
-        self.bo = "BOTH"
         self.turn = self.p1
         self.board = []
         for x in range(self.dim_col):
@@ -46,15 +45,24 @@ class ConnectFourBoard():
         placed in the lowest empty spot in that column.
         """ 
         rowIndex = 0
+        while (self.board[self.pointer])[rowIndex] == self.em:
+            rowIndex++
+        if rowIndex < self.dim_col:
+            (self.board[self.pointer])[rowIndex] = whos_turn
+            self.turn = other_player()
+            self.pointer = 0
+        return
+
+    def can_drop(self) -> bool:
+        """
+        checks if the current player can drop a piece in
+        the current pointer area
+        """
         if valid_move(self.pointer, 0):
-            while (self.board[self.pointer])[rowIndex] == self.em:
-                rowIndex++
-            if rowIndex < self.dim_col:
-                (self.board[self.pointer])[rowIndex] = whos_turn
-                whos_turn = other_player()
-                self.pointer = 0
-        else:    
-            return "cannot drop there"
+            drop()
+            return True
+        return False
+        
     
     def other_player(self) -> str:
         if self.turn == self.p1:
@@ -82,6 +90,17 @@ class ConnectFourBoard():
                         pass
         return False
 
+    def check_for_win(self, row: int, col: int) -> bool:
+        """
+        check for a player's win at a certain position
+        """
+        for dy in {-1, 0, 1}:
+            for dx in {-1, 0, 1}:
+                if alternation(col, row, dx, dy):
+                    return True
+                pass
+        return False
+
     def alternation(self, x: int, y: int, dx: int, dy: int) -> bool:
         """
         Helper function for check_for_win function
@@ -90,11 +109,12 @@ class ConnectFourBoard():
         if dx == 0 and dy == 0:
             return False
         else:
-            while count != 4 and valid_move(x, y):
-                if self.board[x][y] == self.turn:
-                    count++
-                    x += dx
-                    y += dy
+            for i in range(4):
+                if valid_move(x, y):
+                    if self.board[x][y] == self.turn:
+                        count++
+                        x += dx
+                        y += dy
             return count == 4
     
     def valid_move(self, col: int, row: int) -> bool:
@@ -104,3 +124,15 @@ class ConnectFourBoard():
         """
         return 0 <= row and row < self.dim_row and 0 <= col and col < self.dim_col
 
+    def is_game_over(self) -> bool:
+        """
+        check's if the board is filled.
+        """
+        count = 0
+        for x in self.board:
+            for y in self.board[x]:
+                if self.board[x][y] != self.em:
+                    count++
+        return count == self.dim_row*self.dim_col
+            
+                
