@@ -65,5 +65,6 @@ def start_game(main, pygame):
 
         board.drop()
         board.turn = board.other_player()
+        self.GUI.game_over(board.other_player)
 
     return board.other_player

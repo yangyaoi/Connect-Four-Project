@@ -2,7 +2,8 @@ from sys import exit
 import pygame
 from pygame.locals import *
 from ConnectFourBoard import ConnectFourBoard
-
+from tkinter import *
+from Button import Button
 
 class ConnectFourGUI():
     """A class for the graphical user interface of 4-to-Connect"""
@@ -28,6 +29,8 @@ class ConnectFourGUI():
         Set up the display window and the starting screen of the progam.
         REQ: board is a 6-by-7 ConnectFourBoard
         """
+        #check if the screen is on the gameover page
+        self.isGameOver = False
         # Initilize the board
         self.board = board
 
@@ -122,6 +125,17 @@ class ConnectFourGUI():
     def update_screen(self, mouse_position: tuple):
         """(ConnectFourGUI, tuple) -> NoneType
         updates any screen when a button is clicked"""
+        #if game is on the game over page
+        if self.isGameOver:
+            #if quit button is clicked
+            if (0<mouse_position[0]<200 and 0<mouse_position[2]<100):
+                pygame.quit()
+                self.isGameOver = False
+            #if restart button is clicked
+            if (500<mouse_position[0]<700 and 0<mouse_position[2]<100):
+                self.reset_board()
+                self.draw_board()
+                self.isGameOver = False
         # if start button is clicked
         if (394 > mouse_position[0] > 306 and 217 > mouse_position[1] > 190):
             self.play_game()
@@ -139,6 +153,18 @@ class ConnectFourGUI():
         updates the start screen"""
         return
 
+    def game_over(self,winner:str):
+        self.isGameOver = True
+        self.screen.fill(WHITE)
+        font = pygame.font.Font('freesansbold.ttf', 80)
+        text = font.render("Winner: "+winner,True,(0,0,0))
+        textPos = text.get_rect()
+        textPos.center = (350,250)
+        self.screen.blit(text,textPos)
+        quitButton = Button(self.screen,"Quit",(0,0,255),(0,0,0),0,0,200,100,"rect",50)
+        quitButton.place()
+        restartButton = Button(self.screen,"Restart",(0,0,254),(0,0,0),500,0,200,100,"rect",50)
+        restartButton.place()
     def play_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the play screen"""
@@ -158,6 +184,8 @@ class ConnectFourGUI():
         """(ConnectFourGUI, ConnectFourBoard) -> NoneType
         updates the board"""
         return
+    def reset_board(self):
+        self.board = ConnestFourBoard
     def draw_board(self):
         """(ConnectFourGUI) -> NoneType
         Draws the board for use by the game
@@ -186,7 +214,7 @@ class ConnectFourGUI():
         
 if __name__ == "__main__":
     pygame.init()
-    gui = ConnectFourGUI(ConnectFourBoard(6, 7))
+    ConnectFourGUI = ConnextFourGui(ConnectFourBoard(6,7))
     # Quit the game and exit the window
     pygame.quit()
     exit()
