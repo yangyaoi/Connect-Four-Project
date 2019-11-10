@@ -2,7 +2,7 @@ import pygame
 import ConnectFourBoard
 import ConnectFourGUI
 
-def Main:
+def Controller:
 
     def __init__(Player1, Player2, GUI):
         self.board = GUI.Board
@@ -23,6 +23,9 @@ def Main:
 
     def getGUI(self):
         return self.GUI
+
+    def wait_click():
+
 
 
 def start_game(main, pygame):
