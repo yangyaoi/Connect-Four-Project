@@ -29,19 +29,3 @@ class Button():
         textRect = screen_text.get_rect()
         textRect.center = (self.x+self.width/2,self.y+self.height/2)
         self.surface.blit(screen_text,textRect)
-    def isClicked()->bool:
-        return
-if __name__ == "__main__":
-    pygame.init()
-    surface = pygame.display.set_mode((500,500))
-    pygame.display.set_caption("4-to-Connect")
-    running = True
-    surface.fill((255,255,255))
-    button = Button(surface,"quit",(0,0,255),(0,0,255),(0,0,0),100,100,50,20,"ellipse",20)
-    button.place()
-    pygame.display.update()
-    while running:
-        for e in pygame.event.get():
-            if e.type == pygame.QUIT:
-                running = False
-                pygame.quit()
