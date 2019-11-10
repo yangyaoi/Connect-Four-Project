@@ -6,25 +6,24 @@ def Controller:
 
     def __init__(Player1, Player2, GUI):
         self.board = GUI.Board
-        self.player1 = Player1
-        self.player2 = Player2
         self.player2 = GUI
 
     def getBoard(self):
         return self.board
 
-    def getPlayer1(self):
-        return self.player1
-
-
-    def getPlayer2(self):
-        return self.getPlayer2
-
-
     def getGUI(self):
         return self.GUI
 
-    def wait_click():
+    def wait_click(self):
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit() # Force quit the game by closing window
+
+            # マウスクリック時の動作
+            if event.type == MOUSEBUTTONDOWN:
+                x, y = event.pos
+                print("mouse clicked -> (" + str(x) + ", " + str(y) + ")") #Temp output to check the clicked position
 
 
 
@@ -68,6 +67,5 @@ def start_game(main, pygame):
 
         board.drop()
         board.turn = board.other_player()
-        self.GUI.game_over(board.other_player)
 
     return board.other_player

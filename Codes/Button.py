@@ -17,10 +17,10 @@ class Button():
         self.colourOfText = colourOfText
         self.fontSize = fontSize
         self.clicked = False
-        
+
     def place(self)->None:
         if self.pattern == "rect":
-            
+
             pygame.draw.rect(self.surface,self.colour,[self.x,self.y,self.width,self.height])
         elif self.pattern == "ellipse":
             pygame.draw.ellipse(self.surface,self.colour,[self.x,self.y,self.width,self.height])
@@ -31,21 +31,17 @@ class Button():
         self.surface.blit(screen_text,textRect)
     def isClicked()->bool:
         return
-pygame.init()
-surface = pygame.display.set_mode((500,500))
-pygame.display.set_caption("4-to-Connect")
-running = True
-surface.fill((255,255,255))
-button = Button(surface,"quit",(0,0,255),(0,0,255),(0,0,0),100,100,50,20,"ellipse",20)
-button.place()
-pygame.display.update()
-while running:
-    for e in pygame.event.get():
-        if e.type == pygame.QUIT:
-            running = False
-            pygame.quit()
-
-
-
-            
-    
+if __name__ == "__main__":
+    pygame.init()
+    surface = pygame.display.set_mode((500,500))
+    pygame.display.set_caption("4-to-Connect")
+    running = True
+    surface.fill((255,255,255))
+    button = Button(surface,"quit",(0,0,255),(0,0,255),(0,0,0),100,100,50,20,"ellipse",20)
+    button.place()
+    pygame.display.update()
+    while running:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                running = False
+                pygame.quit()
