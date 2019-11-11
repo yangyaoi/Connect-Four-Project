@@ -39,73 +39,28 @@ class ConnectFourGUI():
         self.screen.fill((110, 215, 180))
         pygame.display.set_caption("4-to-Connect")
 
-        # Button font
-        font = pygame.font.Font('freesansbold.ttf', 20)
-
-        # Start button
-        pygame.draw.ellipse(self.screen, (61, 89, 171), [300, 170, 100, 50])
-        start_text = font.render("Start", True, (255, 255, 255), (61, 89, 171))
-        starttextRect = start_text.get_rect()
-        starttextRect.center = (350, 195)
-        self.screen.blit(start_text, starttextRect)
-        start_button = starttextRect
-
+        # Start Button
+        self.start_button = Button(self.screen, "Start", (61, 89, 171), (0, 0, 0), (255, 255, 255), 300, 170, 100, 50, "ellipse", 20)
+        self.start_button.place()
+        
         # Help Button
-        pygame.draw.ellipse(self.screen, (61, 89, 171), [300, 230, 100, 50])
-        help_text = font.render("Help", True, (255, 255, 255), (61, 89, 171))
-        helptextRect = help_text.get_rect()
-        helptextRect.center = (350, 253)
-        self.screen.blit(help_text, helptextRect)
-        help_button = helptextRect
+        self.help_button = Button(self.screen, "Help", (61, 89, 171), (0,0,0), (255,255,255), 300, 230, 100, 50, "ellipse", 20)
+        self.help_button.place()
 
         # Exit Button
-        pygame.draw.ellipse(self.screen, (61, 89, 171), [300, 290, 100, 50])
-        exit_text = font.render("Exit", True, (255, 255, 255), (61, 89, 171))
-        exittextRect = exit_text.get_rect()
-        exittextRect.center = (350, 313)
-        self.screen.blit(exit_text, exittextRect)
-        exit_button = exittextRect
+        self.exit_button = Button(self.screen, "Exit", (61, 89, 171), (0,0,0), (255,255,255), 300, 290, 100, 50, "ellipse", 20)
+        self.exit_button.place()        
 
         # Create the title on the game start screen
-        font = pygame.font.Font('freesansbold.ttf', 50)
-        intro_text = font.render("4-to-Connect", True, (0, 0, 0),
-                                 (110, 215, 180))
-        introtextRect = intro_text.get_rect()
-        introtextRect.center = (350, 125)
-        self.screen.blit(intro_text, introtextRect)
+        create_text("4-to-Connect", 350, 125, 'default', 50, self.screen)
 
-        # Creators section
-        font = pygame.font.Font('freesansbold.ttf', 20)
-        creators_text = font.render("Creators", True, (0, 0, 0),
-                                    (110, 215, 180))
-        creatorstextRect = creators_text.get_rect()
-        creatorstextRect.center = (620, 374)
-        self.screen.blit(creators_text, creatorstextRect)
-        # Names section
-        name1_text = font.render("Calvin Vadivelu", True, (0, 0, 0),
-                                 (110, 215, 180))
-        name1textRect = name1_text.get_rect()
-        name1textRect.center = (620, 394)
-        self.screen.blit(name1_text, name1textRect)
-        name2_text = font.render("Gen Tomita", True, (0, 0, 0),
-                                 (110, 215, 180))
-        name2textRect = name2_text.get_rect()
-        name2textRect.center = (620, 414)
-        self.screen.blit(name2_text, name2textRect)
-        name3_text = font.render("Hafsah Moalim", True, (0, 0, 0),
-                                 (110, 215, 180))
-        name3textRect = name3_text.get_rect()
-        name3textRect.center = (620, 434)
-        self.screen.blit(name3_text, name3textRect)
-        name4_text = font.render("Ilija Zivkovic", True, (0, 0, 0),
-                                 (110, 215, 180))
-        name4textRect = name1_text.get_rect()
-        name4textRect.center = (630, 454)
-        self.screen.blit(name4_text, name4textRect)
-        name5_text = font.render("Yao Yang", True, (0, 0, 0), (110, 215, 180))
-        name5textRect = name5_text.get_rect()
-        name5textRect.center = (620, 474)
-        self.screen.blit(name5_text, name5textRect)
+        # Creators Section
+        create_text("Creators", 620, 374, 'default', 20, self.screen)
+        create_text("Calvin Vadivelu", 620, 394, 'default', 20, self.screen)
+        create_text("Gen Tomita", 620, 414, 'default', 20, self.screen)
+        create_text("Hafsah Moalim", 620, 434, 'default', 20, self.screen)
+        create_text("Ilija Zivkovic", 620, 454, 'default', 20, self.screen)
+        create_text("Yao Yang", 620, 474, 'default', 20, self.screen)
 
         # Run game and make the neccessary changes to the screen when needed
         running = True
@@ -136,22 +91,67 @@ class ConnectFourGUI():
                 self.reset_board()
                 self.draw_board()
                 self.isGameOver = False
+
         # if start button is clicked
         if (394 > mouse_position[0] > 306 and 217 > mouse_position[1] > 190):
+            self.start_button.clicked = True
             self.play_game()
 
         # if help button is clicked
         if (394 > mouse_position[0] > 306 and 274 > mouse_position[1] > 232):
-            self.screen.fill((0, 0, 0))
+            self.help_button.clicked = True
+            self.help_view()
 
         # if exit button is clicked
         if (394 > mouse_position[0] > 306 and 335 > mouse_position[1] > 295):
+            self.exit_button.clicked = True
             self.exit_game()
 
     def start_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the start screen"""
         return
+    
+    def help_view(self):
+        self.screen.fill((110, 215, 180))
+        # Help text
+        help_text = []
+        help_text.append("4-to-Connect is a computer program based on the classic game Connect 4. To begin")
+        help_text.append("playing, press the start button.")
+        help_text.append("")
+        help_text.append("How to Play")
+        help_text.append("This game requires two players, a 7x6 board and disks that are either red or yellow.")
+        help_text.append("Players take turns dropping disks into columns until a player wins or no more moves")
+        help_text.append("are possible. To win, a player must have made 4 disks of their colour be in a row,")
+        help_text.append("column or diagonal. The game is a tie when all 42 slots are filled with disks.")
+        help_text.append("")
+        help_text.append("Controls")
+        help_text.append("The first player to make a move will be player 1 and have a red disk. When it is your")
+        help_text.append("turn to make a move, click the unfilled column that you would like to drop a disk in. ")
+        help_text.append("The disk representing your colour will appear in the last empty slot of the column")
+        help_text.append("and the other player can then make a move.")
+
+        
+        create_text("HELP", 350, 50, 'calibri', 50, self.screen, True)
+        
+        i = 0
+        while (i < len(help_text)):
+            if (help_text[i] == "How to Play" or help_text[i] == "Controls"):
+                create_text(help_text[i], 350, 100 + i*20, 'calibri', 20, self.screen, True)
+            else:
+                create_text(help_text[i], 350, 100 + i*20, 'calibri', 20, self.screen)
+            i += 1
+        
+        # Start button
+        pygame.draw.ellipse(self.screen, (61, 89, 171), [50, 425, 100, 50])
+        create_text("Start", 100, 450, 'defualt', 20, self.screen, False, (255,255,255))
+        
+        # Exit button
+        pygame.draw.ellipse(self.screen, (61, 89, 171), [550, 425, 100, 50])
+        create_text("Exit", 600, 450, 'defualt', 20, self.screen, False, (255,255,255))
+                
+        
+        pygame.display.update()   
 
     def game_over(self,winner:str):
         self.isGameOver = True
@@ -175,8 +175,6 @@ class ConnectFourGUI():
         """(ConnectFourGUI) -> NoneType
         updates the exit screen"""
         self.screen.fill((255, 255, 255))
-        pygame.quit()
-        exit()
 
         return
 
@@ -212,9 +210,26 @@ class ConnectFourGUI():
         #             pygame.draw.circle(self.SCREEN, self.YELLOW, loc, self.RADIUS)
         pygame.display.update()
         
+        
+def create_text(text, pos_x, pos_y, re_font, size, screen, bold=False, colour = (0,0,0), italicize=False):
+    """Gives something that you can put right away on board"""
+
+
+    matched_font = pygame.font.match_font(re_font, bold, italicize)
+    if (matched_font is None):
+        matched_font = 'freesansbold.ttf'
+    text_font = pygame.font.Font(matched_font, size)
+    
+    # True is antialias 
+    render_text = text_font.render(text, True, colour)
+    renderedtextRect = render_text.get_rect()
+    renderedtextRect.center = (pos_x, pos_y)
+    screen.blit(render_text, renderedtextRect)
+    
+
 if __name__ == "__main__":
     pygame.init()
-    ConnectFourGUI = ConnextFourGui(ConnectFourBoard(6,7))
+    ConnectFour = ConnectFourGUI(ConnectFourBoard(6,7))
     # Quit the game and exit the window
     pygame.quit()
     exit()
