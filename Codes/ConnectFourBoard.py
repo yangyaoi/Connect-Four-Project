@@ -20,14 +20,14 @@ class ConnectFourBoard():
                 temp.append(self.em)
             self.board.append(temp)
         return
-    
+
     def move_left(self) -> None:
         """
-        Player moves drop spot one column to the left. 
+        Player moves drop spot one column to the left.
         """
         n = self.pointer-1
         if valid_move(n, 0):
-            self.pointer--
+            self.pointer -= 1
         return
 
     def move_right(self) -> None:
@@ -36,14 +36,14 @@ class ConnectFourBoard():
         """
         n = self.p1_pointer+1
         if valid_move(n, 0):
-            self.p1_pointer++
+            self.p1_pointer += 1
         return
 
     def drop(self) -> None:
         """
         Player drops the piece. The player’s character is
         placed in the lowest empty spot in that column.
-        """ 
+        """
         rowIndex = 0
         while (self.board[self.pointer])[rowIndex] == self.em:
             rowIndex++
@@ -62,13 +62,12 @@ class ConnectFourBoard():
             drop()
             return True
         return False
-        
-    
+
     def other_player(self) -> str:
         if self.turn == self.p1:
             return self.p2
         return self.p1
-    
+
     def whos_turn(self) -> str:
         """
         Returns who is currently making the move.
@@ -109,20 +108,29 @@ class ConnectFourBoard():
         if dx == 0 and dy == 0:
             return False
         else:
+<<<<<<< HEAD
             for i in range(4):
                 if valid_move(x, y):
                     if self.board[x][y] == self.turn:
                         count++
                         x += dx
                         y += dy
+=======
+            while count != 4 and valid_move(x, y):
+                if self.board[x][y] == self.turn:
+                    count += 1
+                    x += dx
+                    y += dy
+>>>>>>> edd2780cb2e508acc158a7c893a777abf77102a3
             return count == 4
-    
+
     def valid_move(self, col: int, row: int) -> bool:
         """
         Check if the player’s requested drop position is in
-        accordance to the game rules and fits in the nested list grid. 
+        accordance to the game rules and fits in the nested list grid.
         """
         return 0 <= row and row < self.dim_row and 0 <= col and col < self.dim_col
+<<<<<<< HEAD
 
     def is_game_over(self) -> bool:
         """
@@ -136,3 +144,5 @@ class ConnectFourBoard():
         return count == self.dim_row*self.dim_col
             
                 
+=======
+>>>>>>> edd2780cb2e508acc158a7c893a777abf77102a3
