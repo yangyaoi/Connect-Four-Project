@@ -1,4 +1,3 @@
-from typing import TextIO, List, Dict, Tuple
 
 
 class ConnectFourBoard:
@@ -20,7 +19,6 @@ class ConnectFourBoard:
             for y in range(self.dim_row):
                 temp.append(self.em)
             self.board.append(temp)
-        return
 
     def move_left(self) -> None:
         """
@@ -29,7 +27,6 @@ class ConnectFourBoard:
         n = self.pointer-1
         if self.valid_move(n, 0):
             self.pointer -= 1
-        return
 
     def move_right(self) -> None:
         """
@@ -38,31 +35,29 @@ class ConnectFourBoard:
         n = self.pointer+1
         if self.valid_move(n, 0):
             self.pointer += 1
-        return
 
-    def drop(self) -> None:
+    def drop(self, col: int) -> None:
         """
         Player drops the piece. The player’s character is
         placed in the lowest empty spot in that column.
         """
+        self.pointer = col-1
         row_index = 0
-        while (self.board[self.pointer])[row_index] == self.em:
-            row_index += 1
-        if row_index < self.dim_col:
-            self.board[self.pointer][row_index] = self.whos_turn
-            self.turn = self.other_player()
-            self.pointer = 0
-        return
+        for x in range(self.dim_row):
+            if self.board[self.pointer][row_index] == self.em:
+                row_index += 1
+            else:
+                break
+        self.board[self.pointer][row_index-1] = self.turn
+        self.turn = self.other_player()
+        self.pointer = 0
 
-    def can_drop(self) -> bool:
+    def can_drop(self, col: int) -> bool:
         """
         checks if the current player can drop a piece in
         the current pointer area
         """
-        if self.valid_move(self.pointer, 0):
-            self.drop()
-            return True
-        return False
+        return self.valid_move(col, 0)
 
     def other_player(self) -> str:
         if self.turn == self.p1:
@@ -139,3 +134,6 @@ class ConnectFourBoard:
                 if self.board[x][y] != self.em:
                     count += 1
         return count == self.dim_row*self.dim_col
+
+
+
