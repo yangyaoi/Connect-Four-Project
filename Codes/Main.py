@@ -1,12 +1,13 @@
 import pygame
-import ConnectFourBoard
-import ConnectFourGUI
+import ConnectFourBoard as B
+import ConnectFourGUI as G
+import Controller as C
 
 def Main:
 
-    def __init__(Player1, Player2, GUI):
+    def __init__(self, GUI):
         self.board = GUI.Board
-        self.player2 = GUI
+        self.GUI = GUI
 
     def getBoard(self):
         return self.board
@@ -31,3 +32,23 @@ def start_game(main, pygame):
 
 
     """
+
+
+if __name__ == '__main__':
+    pygame.init()
+    main = Main(ConnectFourBoard.ConnectFourBoard(6,7))
+    while not main.is_game_over():
+        (x,y) = C.wait_click()
+        column = C.get_column((x,y))
+
+        if main.board.can_drop(column):
+            main.board.drop(column)
+            #updateGUI there
+
+        if main.board.check_for_win():
+            # show Win view for current player
+            break
+
+        main.board.turn = main.board.other_player()
+
+    pygame.quit()
