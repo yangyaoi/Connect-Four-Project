@@ -2,7 +2,7 @@ import pygame
 import ConnectFourBoard
 import ConnectFourGUI
 
-def Controller:
+def Main:
 
     def __init__(Player1, Player2, GUI):
         self.board = GUI.Board
@@ -13,18 +13,6 @@ def Controller:
 
     def getGUI(self):
         return self.GUI
-
-    def wait_click(self):
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit() # Force quit the game by closing window
-
-            # マウスクリック時の動作
-            if event.type == MOUSEBUTTONDOWN:
-                x, y = event.pos
-                print("mouse clicked -> (" + str(x) + ", " + str(y) + ")") #Temp output to check the clicked position
-
 
 
 def start_game(main, pygame):
@@ -43,29 +31,3 @@ def start_game(main, pygame):
 
 
     """
-
-    board = main.board
-
-    while not board.check_for_win():
-        key = pygame.key.get_pressed
-
-        while not key[K_S] or not key[K_DOWN]:
-            if board.whos_turn == "P1"
-                if keys[K_LEFT]:
-                    board.move_left
-                elif keys[K_RIGHT]:
-                    board.move_right
-                #UPdating screen for user input is required.
-            else:
-                if keys[K_A]:
-                    board.move_left
-                elif keys[K_D]:
-                    board.move_right
-
-            main.GUI.update_screen() #The timing of updating screen has to be reconsidered.
-            keys = pygame.key.get_pressed()
-
-        board.drop()
-        board.turn = board.other_player()
-
-    return board.other_player
