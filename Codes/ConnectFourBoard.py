@@ -110,11 +110,6 @@ class ConnectFourBoard:
                         count += 1
                         x += dx
                         y += dy
-            while count != 4 and self.valid_move(x, y):
-                if self.board[x][y] == self.turn:
-                    count += 1
-                    x += dx
-                    y += dy
             return count == 4
 
     def valid_move(self, col: int, row: int) -> bool:
