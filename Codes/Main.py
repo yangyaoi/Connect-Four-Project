@@ -16,23 +16,6 @@ def Main:
         return self.GUI
 
 
-def start_game(main, pygame):
-
-    """Start the game and return the winner as string
-
-    parameter:
-
-    main (Main): Main instance
-    pygame (pygame): initialized pygame
-
-    Returns:
-
-    string: P1 when player1 won, otherwise P2
-
-
-
-    """
-
 
 if __name__ == '__main__':
     pygame.init()
@@ -46,7 +29,7 @@ if __name__ == '__main__':
             #updateGUI there
 
         if main.board.check_for_win():
-            # show Win view for current player
+            # show Winner view for current player
             break
 
         main.board.turn = main.board.other_player()
