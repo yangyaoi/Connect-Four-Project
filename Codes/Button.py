@@ -17,6 +17,7 @@ class Button():
         self.colourOfText = colourOfText
         self.fontSize = fontSize
         self.clicked = False
+        self.origin_colour = (colour[0],colour[1],colour[2])
 
     def place(self)->None:
         if self.pattern == "rect":
@@ -29,3 +30,16 @@ class Button():
         textRect = screen_text.get_rect()
         textRect.center = (self.x+self.width/2,self.y+self.height/2)
         self.surface.blit(screen_text,textRect)
+    def change_colour(self)->None:
+        """
+        change the color of button to indicatorcolour
+        """
+        self.colour = self.indicatorColour
+       
+        self.place()
+    def reset_colour(self)->None:
+        """
+        chage the colour of button to origin colour
+        """
+        self.colour = self.origin_colour
+        self.place()

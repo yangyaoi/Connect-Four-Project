@@ -129,6 +129,19 @@ class ConnectFourBoard:
                 if self.board[x][y] != self.em:
                     count += 1
         return count == self.dim_row*self.dim_col
-
+    def get_drop_loc(self,column:int) -> int:
+        """
+        return the location on the board which player can place a pieaces according to column.
+        """
+        if self.can_drop(column):
+            if self.board[column][5] == self.em:
+                return 5
+            row_index = 0
+            for x in range(self.dim_row):
+                if self.board[column][row_index] == self.em:
+                    row_index += 1
+                else:
+                    break            
+            return row_index
 
 
