@@ -29,16 +29,19 @@ class ConnectFourGUI():
         Set up the display window and the starting screen of the progam.
         REQ: board is a 6-by-7 ConnectFourBoard
         """
+        self.columnsList = []#list of buttons represent columns.
         #check if the screen is on the gameover page
         self.isGameOver = False
         # Initilize the board
         self.board = board
+        #check if the screen is on the playing page
+        self.isBoard = False
 
         # Display the window for the program
         self.screen = pygame.display.set_mode((700, 500))
         self.screen.fill((110, 215, 180))
         pygame.display.set_caption("4-to-Connect")
-
+        
         # Start Button
         self.start_button = Button(self.screen, "Start", (61, 89, 171), (0, 0, 0), (255, 255, 255), 300, 170, 100, 50, "ellipse", 20)
         self.start_button.place()
@@ -71,12 +74,35 @@ class ConnectFourGUI():
                     running = False
                 # When one of the players clicks on the screen, get the mouse
                 # position and update the screen to show their changes
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN :
                     mouse_position = pygame.mouse.get_pos()
                     self.update_screen(mouse_position)
-
+                if self.isBoard:
+                    mouse_position = pygame.mouse.get_pos()
+                    self.updateColumnButtons(mouse_position)
                 pygame.display.flip()
 
+    def updateColumnButtons(self,mouse_position):
+        """
+        updates screen when mouse is moved in playing stage
+        """
+       
+        column = self.decide_column(mouse_position)
+        row_index = None
+                
+        for i in range(7):
+            row_index = self.board.get_drop_loc(column)
+            if i == column:
+                self.columnsList[i].change_colour()
+                loc = (int((column+0.5)*self.SQUARESIZE), int((row_index+1.5)*self.SQUARESIZE))
+                pygame.draw.circle(self.SCREEN, (199,199,199), loc, self.RADIUS)                
+                
+            else:
+                self.columnsList[i].reset_colour()
+                loc = (int((i+0.5)*self.SQUARESIZE), int((row_index+1.5)*self.SQUARESIZE))
+                pygame.draw.circle(self.SCREEN, self.BLACK, loc, self.RADIUS)                
+        
+        
     def update_screen(self, mouse_position: tuple):
         """(ConnectFourGUI, tuple) -> NoneType
         updates any screen when a button is clicked"""
@@ -91,7 +117,7 @@ class ConnectFourGUI():
                 self.reset_board()
                 self.draw_board()
                 self.isGameOver = False
-
+       
         # if start button is clicked
         if (394 > mouse_position[0] > 306 and 217 > mouse_position[1] > 190):
             self.start_button.clicked = True
@@ -107,6 +133,12 @@ class ConnectFourGUI():
             self.exit_button.clicked = True
             self.exit_game()
 
+    def decide_column(self,mouse_position)->int:
+        """
+        return which column is mouse at
+        """
+        return int(mouse_position[0]/100)
+        
     def start_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the start screen"""
@@ -178,7 +210,7 @@ class ConnectFourGUI():
 
         return
 
-    def upate_board(self, board: ConnectFourBoard):
+    def update_board(self, board: ConnectFourBoard):
         """(ConnectFourGUI, ConnectFourBoard) -> NoneType
         updates the board"""
         return
@@ -192,7 +224,15 @@ class ConnectFourGUI():
         player input
          - Make board look better :(...
         """
-
+        #draw 5 buttons represent number of columns.
+        self.isBoard = True
+        
+        
+        for i in range(7):
+            self.columnsList.append(Button(self.screen,str(i+1),(104,34,139),(191,62,255),(0,0,0),i*self.SQUARESIZE+10,0,80,80,"ellipse",40))
+            
+        for buttons in self.columnsList:
+            buttons.place()
         for c in range(self.NUM_COLS):
             for r in range(self.NUM_ROWS):
                 loc_size = (c*self.SQUARESIZE, (r+1)*self.SQUARESIZE, self.SQUARESIZE, self.SQUARESIZE)
