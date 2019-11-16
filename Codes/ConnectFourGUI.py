@@ -186,6 +186,7 @@ class ConnectFourGUI():
         pygame.display.update()   
 
     def game_over(self,winner:str):
+        self.isBoard = False
         self.isGameOver = True
         self.screen.fill(WHITE)
         font = pygame.font.Font('freesansbold.ttf', 80)
@@ -216,6 +217,7 @@ class ConnectFourGUI():
         return
     def reset_board(self):
         self.board = ConnestFourBoard
+        self.isGameOver = False
     def draw_board(self):
         """(ConnectFourGUI) -> NoneType
         Draws the board for use by the game
@@ -269,7 +271,7 @@ def create_text(text, pos_x, pos_y, re_font, size, screen, bold=False, colour = 
 
 if __name__ == "__main__":
     pygame.init()
-    ConnectFour = ConnectFourGUI(ConnectFourBoard(6,7))
+    ConnectFourGui = ConnectFourGUI(ConnectFourBoard(6,7))
     # Quit the game and exit the window
     pygame.quit()
     exit()
