@@ -32,6 +32,7 @@ class ConnectFourGUI():
         self.columnsList = []#list of buttons represent columns.
         #check if the screen is on the gameover page
         self.isGameOver = False
+        self.isPlaying = False
         # Initilize the board
         self.board = board
         #check if the screen is on the playing page
@@ -117,21 +118,24 @@ class ConnectFourGUI():
                 self.reset_board()
                 self.draw_board()
                 self.isGameOver = False
-       
-        # if start button is clicked
-        if (394 > mouse_position[0] > 306 and 217 > mouse_position[1] > 190):
-            self.start_button.clicked = True
-            self.play_game()
+        #if game is on the playing(board) screen
+        elif self.isPlaying:
+            print(self.decide_column(mouse_position))
+        else:
+            # if start button is clicked
+            if (394 > mouse_position[0] > 306 and 217 > mouse_position[1] > 190):
+                self.start_button.clicked = True
+                self.play_game()
 
-        # if help button is clicked
-        if (394 > mouse_position[0] > 306 and 274 > mouse_position[1] > 232):
-            self.help_button.clicked = True
-            self.help_view()
+            # if help button is clicked
+            if (394 > mouse_position[0] > 306 and 274 > mouse_position[1] > 232):
+                self.help_button.clicked = True
+                self.help_view()
 
-        # if exit button is clicked
-        if (394 > mouse_position[0] > 306 and 335 > mouse_position[1] > 295):
-            self.exit_button.clicked = True
-            self.exit_game()
+            # if exit button is clicked
+            if (394 > mouse_position[0] > 306 and 335 > mouse_position[1] > 295):
+                self.exit_button.clicked = True
+                self.exit_game()
 
     def decide_column(self,mouse_position)->int:
         """
@@ -201,6 +205,7 @@ class ConnectFourGUI():
     def play_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the play screen"""
+        self.isPlaying = True
         self.draw_board()
         return
 
