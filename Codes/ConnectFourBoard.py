@@ -135,7 +135,7 @@ class ConnectFourBoard:
         """
         if self.can_drop(column):
             if self.board[column][5] == self.em:
-                return 3
+                return 5
             row_index = 0
             for x in range(self.dim_row):
                 if self.board[column][row_index] == self.em:
