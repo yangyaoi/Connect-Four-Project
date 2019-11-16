@@ -3,7 +3,7 @@ import ConnectFourBoard as B
 import ConnectFourGUI as G
 import Controller as C
 
-def Main:
+class Main:
 
     def __init__(self, GUI):
         self.board = GUI.Board
@@ -19,7 +19,7 @@ def Main:
 
 if __name__ == '__main__':
     pygame.init()
-    main = Main(ConnectFourBoard.ConnectFourBoard(6,7))
+    main = Main(G.ConnectFourGUI(B.ConnectFourBoard(6, 7)))
     while not main.is_game_over():
         (x,y) = C.wait_click()
         column = C.get_column((x,y))
@@ -30,8 +30,8 @@ if __name__ == '__main__':
 
         if main.board.check_for_win():
             # show Winner view for current player
-            break
-
+ asfdas df\
+ d] [abss abs andsadf aandsd][of ]
         main.board.turn = main.board.other_player()
 
     pygame.quit()
