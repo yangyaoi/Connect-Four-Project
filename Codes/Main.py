@@ -6,7 +6,7 @@ import Controller as C
 class Main:
 
     def __init__(self, GUI):
-        self.board = GUI.Board
+        self.board = GUI.board
         self.GUI = GUI
 
     def getBoard(self):
@@ -20,9 +20,9 @@ class Main:
 if __name__ == '__main__':
     pygame.init()
     main = Main(G.ConnectFourGUI(B.ConnectFourBoard(6, 7)))
-    while not main.is_game_over():
+    while not main.board.is_game_over():
         (x,y) = C.wait_click()
-        column = C.get_column((x,y))
+        column = main.GUI.decide_column((x,y))
 
         if main.board.can_drop(column):
             main.board.drop(column)
@@ -30,8 +30,7 @@ if __name__ == '__main__':
 
         if main.board.check_for_win():
             # show Winner view for current player
- asfdas df\
- d] [abss abs andsadf aandsd][of ]
+            pass
         main.board.turn = main.board.other_player()
 
     pygame.quit()
