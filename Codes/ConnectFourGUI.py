@@ -38,7 +38,7 @@ class ConnectFourGUI():
         self.isBoard = False
 
         # Display the window for the program
-        self.screen = pygame.display.set_mode((700, 500))
+        self.screen = pygame.display.set_mode((700, 700))
         self.screen.fill((110, 215, 180))
         pygame.display.set_caption("4-to-Connect")
         
@@ -215,7 +215,7 @@ class ConnectFourGUI():
         updates the board"""
         return
     def reset_board(self):
-        self.board = ConnestFourBoard
+        self.board = ConnectFourBoard
     def draw_board(self):
         """(ConnectFourGUI) -> NoneType
         Draws the board for use by the game
