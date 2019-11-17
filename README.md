@@ -4,6 +4,7 @@
 - Gameplay and Installation: Gen
 - Communication and Conclusion: Calvin
 - Others: Yao
+- [Handout](https://www.cs.toronto.edu/~lczhang/290/files/presentation.pdf)
 
 # Connect-Four-Project
 - CSC290 Project rep
