@@ -133,6 +133,12 @@ class ConnectFourGUI():
                 self.isGameOver = True
                 self.winner = self.board.other_player()
             #-------------------------------------------------------------
+            '''
+            Please write codes to actually put stone in the view.
+            self.board.whos_turn shows who current player is.
+            Due to the bugs in check_for_win function, it will finish the game
+            whenever there are 4 stones in line.
+            '''
             print(self.decide_column(mouse_position))
         else:
             # if start button is clicked
