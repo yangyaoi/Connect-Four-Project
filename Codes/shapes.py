@@ -63,16 +63,21 @@ class TextBox():
     def __init__(text, pos_x, pos_y, re_font, size, screen, bold=False, colour = (0,0,0), italicize=False):
         self._text = text
         self._y = pos_y
-        self._x = x
+        self._x = pos_x
         self._re_font = re_font
+        self._size = size
+        self._screen = screen
+        self._bold = bold
+        self._colour = colour
+        self._italicize = italicize
     
-    def create_text():
+    def create_text(self):
         matched_font = pygame.font.match_font(re_font, bold, italicize)
         if (matched_font is None):
             matched_font = 'freesansbold.ttf'
         text_font = pygame.font.Font(matched_font, size)
         
-    def place_text():
+    def place_text(self):
         #if
         # True is antialias 
         render_text = text_font.render(text, True, colour)
@@ -114,11 +119,15 @@ class Button():
 # in the view
 class Screen():
     # STATIC: start, play, exit, help
+    SCENE = ["start", "helpsave", "help", "playsave", "play", "exitwin", "exittie", "exit"]
+    # differnet scenes:
+    #      start, help(2), play(2), exit(3)
 
-    def __init__(self, height, width, colour):
+    def __init__(self, height, width, colour, scene):
         self._height = height # height of screen
         self._width = width # width of screen
         self._colour = colour # background colour
+        self._scene = scene # different scenes
         
     def get_height():
         return self._height
@@ -128,6 +137,9 @@ class Screen():
     
     def get_colour():
         return self._colour
+    
+    def get_scene():
+        return self._scene
     
     def set_height(self, height):
         self._height = height
@@ -139,10 +151,51 @@ class Screen():
         self._colour = colour
         
     # useful methods
-    def update_screen(self, scene):
+    def set_scene(self, scene):
         """(Screen, str)-> NoneType
         
         """
+        # this method uses add component and remove component
+        
+        # Display the window for the program
+        self.screen = pygame.display.set_mode((700, 500))
+        self.screen.fill((110, 215, 180))
+        pygame.display.set_caption("4-to-Connect")  
+
+        # start scene
+        if scene == SCENE[0]:
+
+        # else if scene is a help type
+        elif scene in SCENE[1:3]:
+            # NEED TO REMEMBER OLD PLAY
+            if scene == SCENE[1]:
+                pass
+            else:
+                pass
+
+        # else if scene is a play type
+        elif scene in SCENE[3:5]:
+            # NEED TO REMEMBER OLD PLAY
+            if scene == SCENE[1]:
+                pass
+            else:
+                pass
+        # otherwise scene is an exit type
+        else:
+            if scene == SCENE[5]:
+                pass
+            elif scene == SCENE[6]:
+                pass
+            else:
+                pass
+
+        self._scene = scene
+    
+
+    def add_component(self, Object):
+        pass
+    
+    def remove_component(self, Object):
         pass
     
     
@@ -158,4 +211,3 @@ class Screen():
 
 
 # Button is composite
-
