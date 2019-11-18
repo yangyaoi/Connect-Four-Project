@@ -138,7 +138,7 @@ class Screen():
     def get_colour():
         return self._colour
     
-    def get_scene():
+    def get_current_scene():
         return self._scene
     
     def set_height(self, height):
@@ -151,11 +151,12 @@ class Screen():
         self._colour = colour
         
     # useful methods
-    def set_scene(self, scene):
+    def set_scene(self, current_scene, scene):
         """(Screen, str)-> NoneType
         
         """
-        # this method uses add component and remove component
+        # this method uses remove scene
+        self.remove_scene(current_scene)
         
         # Display the window for the program
         self.screen = pygame.display.set_mode((700, 500))
@@ -190,12 +191,12 @@ class Screen():
                 pass
 
         self._scene = scene
-    
-
-    def add_component(self, Object):
+        
+    def remove_scene(self, scene):
         pass
     
-    def remove_component(self, Object):
+    # save all of the properties of the current scene - will be the play scene
+    def save_scene(self, board):
         pass
     
     
