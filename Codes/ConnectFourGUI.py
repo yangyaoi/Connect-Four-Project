@@ -205,16 +205,16 @@ class ConnectFourGUI():
     def game_over(self,winner:str):
         self.isBoard = False
         self.isGameOver = True
-        self.screen.fill(WHITE)
+        self.screen.fill((110, 215, 180))
         font = pygame.font.Font('freesansbold.ttf', 80)
         text = font.render("Winner: "+winner,True,(0,0,0))
         textPos = text.get_rect()
         textPos.center = (350,250)
         self.screen.blit(text,textPos)
-        quitButton = Button(self.screen,"Quit",(0,0,255),(0,0,0),0,0,200,100,"rect",50)
-        quitButton.place()
-        restartButton = Button(self.screen,"Restart",(0,0,254),(0,0,0),500,0,200,100,"rect",50)
-        restartButton.place()
+        pygame.draw.ellipse(self.screen, (61, 89, 171), [50, 425, 100, 50])
+        create_text("Restart", 100, 450, 'defualt', 20, self.screen, False, (255,255,255))
+        pygame.draw.ellipse(self.screen, (61, 89, 171), [550, 425, 100, 50])
+        create_text("Exit", 600, 450, 'defualt', 20, self.screen, False, (255,255,255))
     def play_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the play screen"""
