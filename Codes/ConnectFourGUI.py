@@ -40,7 +40,7 @@ class ConnectFourGUI():
 
         # Temp attribute to hold who wins the game
         self.winner = ''
-        
+
         # Display the window for the program
         self.screen = pygame.display.set_mode((700, 700))
         self.screen.fill((110, 215, 180))
@@ -123,6 +123,16 @@ class ConnectFourGUI():
                 self.isGameOver = False
         #if game is on the playing(board) screen
         elif self.isPlaying:
+            #Tempolary codes to update the model--------------------------
+            column = self.decide_column(mouse_position)
+            if self.board.can_drop(column):
+                self.board.drop(column)
+                self.board.swith_turn()
+
+            if self.board.check_for_win():
+                self.isGameOver = True
+                self.winner = self.board.other_player()
+            #-------------------------------------------------------------
             print(self.decide_column(mouse_position))
         else:
             # if start button is clicked
