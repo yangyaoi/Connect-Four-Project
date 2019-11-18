@@ -127,7 +127,6 @@ class ConnectFourGUI():
             column = self.decide_column(mouse_position)
             if self.board.can_drop(column):
                 self.board.drop(column)
-                self.board.swith_turn()
 
             if self.board.check_for_win():
                 self.isGameOver = True
@@ -137,7 +136,7 @@ class ConnectFourGUI():
             Please write codes to actually put stone in the view.
             self.board.whos_turn shows who current player is.
             Due to the bugs in check_for_win function, it will finish the game
-            whenever there are 4 stones in line.
+            in some occations.
             '''
             print(self.decide_column(mouse_position))
         else:
