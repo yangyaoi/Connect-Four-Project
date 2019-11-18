@@ -70,6 +70,13 @@ class ConnectFourBoard:
         """
         return self.turn
 
+    def swith_turn(self)-> None:
+        if self.turn == self.p1:
+            self.turn = self.p2
+        else:
+            self.turn = self.p1
+
+
     def check_for_win(self) -> bool:
         """
         Check whether the player wins. Go through the board
@@ -141,7 +148,5 @@ class ConnectFourBoard:
                 if self.board[column][row_index] == self.em:
                     row_index += 1
                 else:
-                    break            
+                    break
             return row_index
-
-
