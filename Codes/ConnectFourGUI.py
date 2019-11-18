@@ -127,7 +127,6 @@ class ConnectFourGUI():
             column = self.decide_column(mouse_position)
             if self.board.can_drop(column):
                 self.board.drop(column)
-                self.board.swith_turn()
 
             if self.board.check_for_win():
                 self.isGameOver = True
