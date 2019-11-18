@@ -38,22 +38,25 @@ class ConnectFourGUI():
         #check if the screen is on the playing page
         self.isBoard = False
 
+        # Temp attribute to hold who wins the game
+        self.winner = ''
+        
         # Display the window for the program
         self.screen = pygame.display.set_mode((700, 700))
         self.screen.fill((110, 215, 180))
         pygame.display.set_caption("4-to-Connect")
-        
+
         # Start Button
         self.start_button = Button(self.screen, "Start", (61, 89, 171), (0, 0, 0), (255, 255, 255), 300, 170, 100, 50, "ellipse", 20)
         self.start_button.place()
-        
+
         # Help Button
         self.help_button = Button(self.screen, "Help", (61, 89, 171), (0,0,0), (255,255,255), 300, 230, 100, 50, "ellipse", 20)
         self.help_button.place()
 
         # Exit Button
         self.exit_button = Button(self.screen, "Exit", (61, 89, 171), (0,0,0), (255,255,255), 300, 290, 100, 50, "ellipse", 20)
-        self.exit_button.place()        
+        self.exit_button.place()
 
         # Create the title on the game start screen
         create_text("4-to-Connect", 350, 125, 'default', 50, self.screen)
@@ -87,23 +90,23 @@ class ConnectFourGUI():
         """
         updates screen when mouse is moved in playing stage
         """
-       
+
         column = self.decide_column(mouse_position)
         row_index = None
-                
+
         for i in range(7):
             row_index = self.board.get_drop_loc(column)
             if i == column:
                 self.columnsList[i].change_colour()
                 loc = (int((column+0.5)*self.SQUARESIZE), int((row_index+1.5)*self.SQUARESIZE))
-                pygame.draw.circle(self.SCREEN, (199,199,199), loc, self.RADIUS)                
-                
+                pygame.draw.circle(self.SCREEN, (199,199,199), loc, self.RADIUS)
+
             else:
                 self.columnsList[i].reset_colour()
                 loc = (int((i+0.5)*self.SQUARESIZE), int((row_index+1.5)*self.SQUARESIZE))
-                pygame.draw.circle(self.SCREEN, self.BLACK, loc, self.RADIUS)                
-        
-        
+                pygame.draw.circle(self.SCREEN, self.BLACK, loc, self.RADIUS)
+
+
     def update_screen(self, mouse_position: tuple):
         """(ConnectFourGUI, tuple) -> NoneType
         updates any screen when a button is clicked"""
@@ -142,12 +145,12 @@ class ConnectFourGUI():
         return which column is mouse at
         """
         return int(mouse_position[0]/100)
-        
+
     def start_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the start screen"""
         return
-    
+
     def help_view(self):
         self.screen.fill((110, 215, 180))
         # Help text
@@ -167,9 +170,9 @@ class ConnectFourGUI():
         help_text.append("The disk representing your colour will appear in the last empty slot of the column")
         help_text.append("and the other player can then make a move.")
 
-        
+
         create_text("HELP", 350, 50, 'calibri', 50, self.screen, True)
-        
+
         i = 0
         while (i < len(help_text)):
             if (help_text[i] == "How to Play" or help_text[i] == "Controls"):
@@ -177,17 +180,17 @@ class ConnectFourGUI():
             else:
                 create_text(help_text[i], 350, 100 + i*20, 'calibri', 20, self.screen)
             i += 1
-        
+
         # Start button
         pygame.draw.ellipse(self.screen, (61, 89, 171), [50, 425, 100, 50])
         create_text("Start", 100, 450, 'defualt', 20, self.screen, False, (255,255,255))
-        
+
         # Exit button
         pygame.draw.ellipse(self.screen, (61, 89, 171), [550, 425, 100, 50])
         create_text("Exit", 600, 450, 'defualt', 20, self.screen, False, (255,255,255))
-                
-        
-        pygame.display.update()   
+
+
+        pygame.display.update()
 
     def game_over(self,winner:str):
         self.isBoard = False
@@ -228,18 +231,18 @@ class ConnectFourGUI():
     def draw_board(self):
         """(ConnectFourGUI) -> NoneType
         Draws the board for use by the game
-        To Do: 
+        To Do:
          - Draw different coloured circles based on
         player input
          - Make board look better :(...
         """
         #draw 5 buttons represent number of columns.
         self.isBoard = True
-        
-        
+
+
         for i in range(7):
             self.columnsList.append(Button(self.screen,str(i+1),(104,34,139),(191,62,255),(0,0,0),i*self.SQUARESIZE+10,0,80,80,"ellipse",40))
-            
+
         for buttons in self.columnsList:
             buttons.place()
         for c in range(self.NUM_COLS):
@@ -248,18 +251,18 @@ class ConnectFourGUI():
                 pygame.draw.rect(self.SCREEN, self.BLUE, loc_size)
                 loc = (int((c+0.5)*self.SQUARESIZE), int((r+1.5)*self.SQUARESIZE))
                 pygame.draw.circle(self.SCREEN, self.BLACK, loc, self.RADIUS)
-        
+
         # for c in range(self.NUM_COLS):
-        #     for r in range(self.NUM_ROWS):		
+        #     for r in range(self.NUM_ROWS):
         #         if self.board[r][c] == 1:
         #             loc = (int((c+0.5)*self.SQUARESIZE), int((r+1.5)*self.SQUARESIZE))
         #             pygame.draw.circle(self.SCREEN, self.RED, loc, self.RADIUS)
-        #         elif self.board[r][c] == -1: 
+        #         elif self.board[r][c] == -1:
         #             loc = (int((c+0.5)*self.SQUARESIZE), int((r+1.5)*self.SQUARESIZE))
         #             pygame.draw.circle(self.SCREEN, self.YELLOW, loc, self.RADIUS)
         pygame.display.update()
-        
-        
+
+
 def create_text(text, pos_x, pos_y, re_font, size, screen, bold=False, colour = (0,0,0), italicize=False):
     """Gives something that you can put right away on board"""
 
@@ -268,13 +271,13 @@ def create_text(text, pos_x, pos_y, re_font, size, screen, bold=False, colour = 
     if (matched_font is None):
         matched_font = 'freesansbold.ttf'
     text_font = pygame.font.Font(matched_font, size)
-    
-    # True is antialias 
+
+    # True is antialias
     render_text = text_font.render(text, True, colour)
     renderedtextRect = render_text.get_rect()
     renderedtextRect.center = (pos_x, pos_y)
     screen.blit(render_text, renderedtextRect)
-    
+
 
 if __name__ == "__main__":
     pygame.init()
