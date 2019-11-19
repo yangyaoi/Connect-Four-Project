@@ -125,12 +125,13 @@ class ConnectFourGUI():
         elif self.isPlaying:
             #Tempolary codes to update the model--------------------------
             column = self.decide_column(mouse_position)
-            if self.board.can_drop(column):
-                self.board.drop(column)
+            if self.board.drop(column):
+                #print(self.board)
+                self.board.switch_turn()
 
-            if self.board.check_for_win():
-                self.isGameOver = True
-                self.winner = self.board.other_player()
+                if self.board.check_for_win():
+                    self.isGameOver = True
+                    self.winner = self.board.other_player()
             #-------------------------------------------------------------
             '''
             Please write codes to actually put stone in the view.
