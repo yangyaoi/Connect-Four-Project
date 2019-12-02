@@ -11,7 +11,7 @@ class ConnectFourBoard:
         self.pointer = 0
         self.p1 = "P1"
         self.p2 = "P2"
-        self.em = "  "
+        self.em = "empty"
         self.turn = self.p1
         self.board = []
         for x in range(self.dim_row):
@@ -29,6 +29,7 @@ class ConnectFourBoard:
         if y == -1:
             return False
         self.board[y][col] = self.turn
+        
         return True
 
     def other_player(self) -> str:

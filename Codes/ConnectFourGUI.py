@@ -12,6 +12,7 @@ class ConnectFourGUI():
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
     YELLOW = (255, 255, 0)
+    WHITE = (255,255,255)
 
     SQUARESIZE = 100
     NUM_COLS = 7
@@ -29,6 +30,7 @@ class ConnectFourGUI():
         Set up the display window and the starting screen of the progam.
         REQ: board is a 6-by-7 ConnectFourBoard
         """
+        self.indicateList = []
         self.columnsList = []#list of buttons represent columns.
         #check if the screen is on the gameover page
         self.isGameOver = False
@@ -90,21 +92,26 @@ class ConnectFourGUI():
         """
         updates screen when mouse is moved in playing stage
         """
-
+        if self.indicateList != []:
+            r = self.indicateList[-1][0]
+            c = self.indicateList[-1][1]
+            self.columnsList[c].reset_colour()
+            if self.board.board[r][c] == "empty":
+                loc = (int((c+0.5)*self.SQUARESIZE), int((r+1.5)*self.SQUARESIZE))
+                pygame.draw.circle(self.SCREEN, (0,0,0), loc, self.RADIUS)
+                
         column = self.decide_column(mouse_position)
-        row_index = None
+        
 
-        for i in range(7):
-            row_index = self.board.get_drop_loc(column)
-            if i == column:
-                self.columnsList[i].change_colour()
-                loc = (int((column+0.5)*self.SQUARESIZE), int((row_index+1.5)*self.SQUARESIZE))
-                pygame.draw.circle(self.SCREEN, (199,199,199), loc, self.RADIUS)
+        
+        row_index = self.board.get_drop_loc(column)
+            
+        self.columnsList[column].change_colour()
+        loc = (int((column+0.5)*self.SQUARESIZE), int((row_index+1.5)*self.SQUARESIZE))
+        self.indicateList.append((row_index,column))
+        pygame.draw.circle(self.SCREEN, (199,199,199), loc, self.RADIUS)
 
-            else:
-                self.columnsList[i].reset_colour()
-                loc = (int((i+0.5)*self.SQUARESIZE), int((row_index+1.5)*self.SQUARESIZE))
-                pygame.draw.circle(self.SCREEN, self.BLACK, loc, self.RADIUS)
+        
 
 
     def update_screen(self, mouse_position: tuple):
@@ -113,24 +120,40 @@ class ConnectFourGUI():
         #if game is on the game over page
         if self.isGameOver:
             #if quit button is clicked
-            if (0<mouse_position[0]<200 and 0<mouse_position[2]<100):
+            if (0<mouse_position[0]<200 and 0<mouse_position[1]<100):
                 pygame.quit()
                 self.isGameOver = False
             #if restart button is clicked
-            if (500<mouse_position[0]<700 and 0<mouse_position[2]<100):
+            if (500<mouse_position[0]<700 and 0<mouse_position[1]<100):
                 self.reset_board()
+                self.screen.fill(self.BLUE)
                 self.draw_board()
                 self.isGameOver = False
         #if game is on the playing(board) screen
         elif self.isPlaying:
             #Tempolary codes to update the model--------------------------
             column = self.decide_column(mouse_position)
-            if self.board.can_drop(column):
-                self.board.drop(column)
-
+            row = self.board.get_drop_loc(column)
+            if self.board.valid_move(column,row):
+                a = self.board.drop(column)
+                print(self.board.board)
+                loc = (int((column+0.5)*self.SQUARESIZE), int((row+1.5)*self.SQUARESIZE))
+                print(2)
+                if self.board.turn == "P1":
+                    
+                    pygame.draw.circle(self.SCREEN, self.RED, loc, self.RADIUS)
+                    print(3)
+                else:
+                    pygame.draw.circle(self.SCREEN, self.YELLOW, loc, self.RADIUS)
+                    print(4)
+                
+                print(5)
             if self.board.check_for_win():
-                self.isGameOver = True
+                print("ture")
                 self.winner = self.board.other_player()
+                self.game_over(self.winner)
+            else:
+                self.board.switch_turn()
             #-------------------------------------------------------------
             '''
             Please write codes to actually put stone in the view.
@@ -210,15 +233,15 @@ class ConnectFourGUI():
     def game_over(self,winner:str):
         self.isBoard = False
         self.isGameOver = True
-        self.screen.fill(WHITE)
+        self.screen.fill(self.WHITE)
         font = pygame.font.Font('freesansbold.ttf', 80)
         text = font.render("Winner: "+winner,True,(0,0,0))
         textPos = text.get_rect()
         textPos.center = (350,250)
         self.screen.blit(text,textPos)
-        quitButton = Button(self.screen,"Quit",(0,0,255),(0,0,0),0,0,200,100,"rect",50)
+        quitButton = Button(self.screen,"Quit",(0,0,255),(0,0,0),(0,0,0),0,0,200,100,"rect",50)
         quitButton.place()
-        restartButton = Button(self.screen,"Restart",(0,0,254),(0,0,0),500,0,200,100,"rect",50)
+        restartButton = Button(self.screen,"Restart",(0,0,254),(0,0,0),(0,0,0),500,0,200,100,"rect",50)
         restartButton.place()
     def play_game(self):
         """(ConnectFourGUI) -> NoneType
