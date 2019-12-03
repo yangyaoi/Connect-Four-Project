@@ -184,12 +184,13 @@ class Screen():
         self._start_button = Button(self._display, "Start", (61, 89, 171), (0, 0, 0), (255, 255, 255), 300, 170, 100, 50, "ellipse", 20)
         self._help_button = Button(self._display, "Help", (61, 89, 171), (0,0,0), (255,255,255), 300, 230, 100, 50, "ellipse", 20)
         self._exit_button = Button(self._display, "Exit", (61, 89, 171), (0,0,0), (255,255,255), 300, 290, 100, 50, "ellipse", 20)
-        self.board = ConnectFourBoard(7, 6)
+        self.board = ConnectFourBoard(6, 7)
         self._saved_scenes = []
-        self.indicateList = []
-        self.columnsList = []#list of buttons represent columns.
-        for i in range(7):
-            self.columnsList.append(Button(self._display,str(i+1),(104,34,139),(191,62,255),(0,0,0),i*100+10,0,80,80,"ellipse",40))        
+        self.drawn_board = Board(self.board.dim_row, self.board.dim_col, self._display, self.board)
+        #self.indicateList = []
+        #self.columnsList = []#list of buttons represent columns.
+        #for i in range(7):
+            #self.columnsList.append(Button(self._display,str(i+1),(104,34,139),(191,62,255),(0,0,0),i*100+10,0,80,80,"ellipse",40))        
         
     def get_height(self):
         return self._height
@@ -212,21 +213,25 @@ class Screen():
     def set_colour(self, colour):
         self._colour = colour
         
+    def set_scene_name(self, scene):
+        self._scene = scene
+    
+    def get_scene_name(self):
+        return self._scene
+        
     def change_scene(self, mouse_position):
         if self._start_button.is_clicked(mouse_position):
-            if self._scene == "helpsave":
-                self.set_scene("playsave")
-            else:
-                self.update_board(mouse_position)
-                self.updateColumnButtons(mouse_position)
-                self.set_scene("play")
+            print("CLICKED")
+            self._scene = "play"
+            self.set_scene("play")
         if self._help_button.is_clicked(mouse_position):
-            if self._scene == "play":
-                self.set_scene("helpsave")
-            else:
-                self.set_scene("help")
+            self._scene = "help"
+            self.set_scene("help")
         if self._exit_button.is_clicked(mouse_position):
-            self.set_scene("exit")        
+            self._scene = "exit"
+            self.set_scene("exit")
+        if self._scene == "play":
+            self.drawn_board.updateColumnButtons(mouse_position)
         
     # useful methods
     def set_scene(self, scene):
@@ -280,11 +285,6 @@ class Screen():
             start_scene.add_scene_obj(yao)
             
             start_scene.create_scene()
-
-        # else if scene is a help type
-            # NEED TO REMEMBER OLD PLAY
-        elif scene == "helpsave":
-            pass
         elif scene == "help":
             help_scene = Scene("help")
             
@@ -329,104 +329,40 @@ class Screen():
             help_scene.add_scene_obj(self._exit_button)
 
             help_scene.create_scene()
-
-        elif scene == "playsave":
-            self._saved_scenes[-1].create_scene()
         elif scene == "play":
+            # create play scene
             play_scene = Scene("play")
-            for i in range(7):
-                play_scene.add_scene_obj(Button(self._display,str(i+1),(104,34,139),(191,62,255),(0,0,0),i*100+10,0,80,80,"ellipse",40))
-        
+            # add draw board
+            play_scene.add_scene_obj(self.drawn_board)
             play_scene.create_scene()
-            board = Board(8, 7, 0, 0, self._display)
-            board.place()
-            pygame.display.update()
-        elif scene == "exitwin":
-            pass
-        elif scene == "exittie":
+            
+            
+            # save board to current scene
+            
+            # place all scene objects
+            #play_scene = Scene("play")
+            #for i in range(7):
+                #play_scene.add_scene_obj(Button(self._display,str(i+1),(104,34,139),(191,62,255),(0,0,0),i*100+10,0,80,80,"ellipse",40))
+        
+            #play_scene.create_scene()
+            #board = Board(8, 7, 0, 0, self._display)
+            #board.place()
+            #pygame.display.update()
             pass
         else:
             exit_scene = Scene("exit")
-            winner = TextBox("Winner: ", 350, 250, 'freesansbold.ttf', 80, self._display)
+            winner = TextBox("Winner: "+self.drawn_board.winner, 350, 250, 'freesansbold.ttf', 80, self._display)
             exit_scene.add_scene_obj(winner)
             self._exit_button.x = 200
             self._exit_button.y = 100
             exit_scene.add_scene_obj(self._exit_button)
-            self._start_button.x = 300
-            self._start_button.y = 300
+            self._start_button.x = 500
+            self._start_button.y = 500
             exit_scene.add_scene_obj(self._start_button)
             exit_scene.create_scene()
       
-    def update_board(self, mouse_position: tuple):
-        """(Screen, tuple) -> NoneType
-        updates the board for every move"""
-        RED = (255, 0, 0)
-        YELLOW = (255, 255, 0)
-        SQUARESIZE = 100
-        RADIUS = int(SQUARESIZE/2 - 5)
-        #if game is on the playing(board) screen
-        #Tempolary codes to update the model--------------------------
-        column = self.decide_column(mouse_position)
-        row = self.board.get_drop_loc(column)
-        if self.board.valid_move(column,row):
-            a = self.board.drop(column)
-            print(self.board.board)
-            loc = (int((column+0.5)*SQUARESIZE), int((row+1.5)*SQUARESIZE))
-            print(2)
-            if self.board.turn == "P1":
-                
-                pygame.draw.circle(self._display, RED, loc, RADIUS)
-                print(3)
-            else:
-                pygame.draw.circle(self._display, YELLOW, loc, RADIUS)
-                print(4)
-            
-            print(5)
-        if self.board.check_for_win():
-            print("ture")
-            self.winner = self.board.other_player()
-            self.set_scene("end")
-        else:
-            self.board.switch_turn()
-        #-------------------------------------------------------------
-        print(self.decide_column(mouse_position))
-            
-    def decide_column(self,mouse_position)->int:
-        """
-        return which column is mouse at
-        """
-        return int(mouse_position[0]/100)
     
 
-    def updateColumnButtons(self,mouse_position):
-        """
-        updates screen when mouse is moved in playing stage
-        """
-            
-        
-        
-        SQUARESIZE = 100
-        RADIUS = int(SQUARESIZE/2 - 5)
-        if self.indicateList != []:
-            r = self.indicateList[-1][0]
-            c = self.indicateList[-1][1]
-            self.columnsList[c].reset_colour()
-            if self.board.board[r][c] == "empty":
-                loc = (int((c+0.5)*SQUARESIZE), int((r+1.5)*SQUARESIZE))
-                pygame.draw.circle(self._display, (0,0,0), loc, RADIUS)
-                
-        column = self.decide_column(mouse_position)
-        
-
-        
-        row_index = self.board.get_drop_loc(column)
-        print(str(len(self.columnsList)) + "HERE")
-        print(column)
-            
-        self.columnsList[column].change_colour()
-        loc = (int((column+0.5)*SQUARESIZE), int((row_index+1.5)*SQUARESIZE))
-        self.indicateList.append((row_index,column))
-        pygame.draw.circle(self._display, (199,199,199), loc, RADIUS)
 
 # Button is composite
 class Scene():
@@ -467,15 +403,112 @@ class Scene():
         return self._scene_objs
     
 class Board():
-    def __init__(self, num_rows, num_cols, length, width, display):
+    SQUARESIZE = 100
+    RADIUS = int(SQUARESIZE/2 - 5)
+    
+    
+    
+    def __init__(self, num_rows, num_cols, display, ConnectFourBoard):
         self._num_rows = num_rows
         self._num_cols = num_cols
-        self._length = length
-        self._width = width
         self._disks = []
         self._display = display
+        self.indicateList = []
+        self.columnsList = []#list of buttons represent columns. 
+        self.isPlaying = False
+        self.isBoard = False
+        self.winner = ''
+        self.board = ConnectFourBoard
+        
+    def updateColumnButtons(self,mouse_position):
+        """
+        updates screen when mouse is moved in playing stage
+        """
+            
+        
+        
+        SQUARESIZE = 100
+        RADIUS = int(SQUARESIZE/2 - 5)
+        if self.indicateList != []:
+            r = self.indicateList[-1][0]
+            c = self.indicateList[-1][1]
+            self.columnsList[c].reset_colour()
+            if self.board.board[r][c] == "empty":
+                loc = (int((c+0.5)*SQUARESIZE), int((r+1.5)*SQUARESIZE))
+                pygame.draw.circle(self._display, (0,0,0), loc, RADIUS)
+                
+        column = self.decide_column(mouse_position)
+        
+
+        
+        row_index = self.board.get_drop_loc(column)
+        print(str(len(self.columnsList)) + "HERE")
+        print(column)
+            
+        self.columnsList[column].change_colour()
+        loc = (int((column+0.5)*SQUARESIZE), int((row_index+1.5)*SQUARESIZE))
+        self.indicateList.append((row_index,column))
+        pygame.draw.circle(self._display, (199,199,199), loc, RADIUS)
+        pygame.display.update()
+    
+    def update_board(self, mouse_position: tuple):
+        """(Screen, tuple) -> NoneType
+        updates the board for every move"""
+        RED = (255, 0, 0)
+        YELLOW = (255, 255, 0)
+        SQUARESIZE = 100
+        RADIUS = int(SQUARESIZE/2 - 5)
+        #if game is on the playing(board) screen
+        #Tempolary codes to update the model--------------------------
+        column = self.decide_column(mouse_position)
+        row = self.board.get_drop_loc(column)
+        if self.board.valid_move(column,row):
+            a = self.board.drop(column)
+            print(self.board.board)
+            loc = (int((column+0.5)*SQUARESIZE), int((row+1.5)*SQUARESIZE))
+            print(2)
+            if self.board.turn == "P1":
+                
+                pygame.draw.circle(self._display, RED, loc, RADIUS)
+                print(3)
+            else:
+                pygame.draw.circle(self._display, YELLOW, loc, RADIUS)
+                print(4)
+            
+            print(5)
+        if self.board.check_for_win():
+            self.winner = self.board.other_player()
+            #self.set_scene("end")
+        else:
+            self.board.switch_turn()
+        #-------------------------------------------------------------
+        print(self.decide_column(mouse_position))
+            
+    def decide_column(self,mouse_position)->int:
+        """
+        return which column is mouse at
+        """
+        return int(mouse_position[0]/100)
+    
+    
+    
+    
+    
+    
+    
+    
     
     def place(self):
+        self.isBoard = True
+
+
+        for i in range(7):
+            self.columnsList.append(Button(self._display,str(i+1),(104,34,139),(191,62,255),(0,0,0),i*100+10,0,80,80,"ellipse",40))
+
+        for buttons in self.columnsList:
+            buttons.place()        
+        
+        
         for c in range(self._num_cols):
             for r in range(self._num_rows):
                 loc_size = (c*100, (r+1)*100, 100, 100)
@@ -485,3 +518,4 @@ class Board():
                 self._disks.append(disk)
                 disk.place()
         pygame.display.update()
+            

@@ -1,0 +1,22 @@
+I have been having some difficulty making the code work with the code structure 
+I planned out.
+
+Structure:
+	Screen:
+		- Contains Scenes. The Screen switches between scenes depending on which
+		  button is clicked
+	Scene:
+		- What the user currently sees on the screen. The user can see the 'start'
+		  scene which has button objects and textbox objects when the program is run.
+		  There is also the "play" scene, "exit" scene and "end" scene.
+		- Scene objects are TextBox(s), Button(s), Board, Disk(s)
+	Board:
+		- Contains disks
+	Button:
+		- Only three buttons will be made from the program start to end. These buttons
+		  will be traded between scenes
+	TextBox:
+		- Will be remade for each scene
+		
+The game does not work as well as it does on the master branch.
+	

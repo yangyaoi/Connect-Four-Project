@@ -1,5 +1,3 @@
-
-
 class ConnectFourBoard:
 
     def __init__(self, rows: int, cols: int) -> None:
