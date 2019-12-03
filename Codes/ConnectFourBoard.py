@@ -11,53 +11,26 @@ class ConnectFourBoard:
         self.pointer = 0
         self.p1 = "P1"
         self.p2 = "P2"
-        self.em = "EMPTY"
+        self.em = "empty"
         self.turn = self.p1
         self.board = []
-        for x in range(self.dim_col):
+        for x in range(self.dim_row):
             temp = []
-            for y in range(self.dim_row):
+            for y in range(self.dim_col):
                 temp.append(self.em)
             self.board.append(temp)
 
-    def move_left(self) -> None:
-        """
-        Player moves drop spot one column to the left.
-        """
-        n = self.pointer-1
-        if self.valid_move(n, 0):
-            self.pointer -= 1
-
-    def move_right(self) -> None:
-        """
-        Player moves drop spot one column to the right.
-        """
-        n = self.pointer+1
-        if self.valid_move(n, 0):
-            self.pointer += 1
-
-    def drop(self, col: int) -> None:
+    def drop(self, col: int) -> bool:
         """
         Player drops the piece. The player’s character is
         placed in the lowest empty spot in that column.
         """
-        self.pointer = col-1
-        row_index = 0
-        for x in range(self.dim_row):
-            if self.board[self.pointer][row_index] == self.em:
-                row_index += 1
-            else:
-                break
-        self.board[self.pointer][row_index-1] = self.turn
-        self.turn = self.other_player()
-        self.pointer = 0
-
-    def can_drop(self, col: int) -> bool:
-        """
-        checks if the current player can drop a piece in
-        the current pointer area
-        """
-        return self.valid_move(col, 0)
+        y = self.get_drop_loc(col)
+        if y == -1:
+            return False
+        self.board[y][col] = self.turn
+        
+        return True
 
     def other_player(self) -> str:
         if self.turn == self.p1:
@@ -70,19 +43,19 @@ class ConnectFourBoard:
         """
         return self.turn
 
+    def switch_turn(self)-> None:
+        self.turn = self.other_player()
+
     def check_for_win(self) -> bool:
         """
         Check whether the player wins. Go through the board
         and see if there is a row, column or diagonal of four
         consecutive pieces of the same player.
         """
-        for x in range(len(self.board)):
-            for y in range(len(self.board[x])):
-                for dy in {-1, 0, 1}:
-                    for dx in {-1, 0, 1}:
-                        if self.alternation(x, y, dx, dy):
-                            return True
-                        pass
+        for y in range(self.dim_row):
+            for x in range(self.dim_col):
+                if self.check_win_at_position(x, y):
+                    return True
         return False
 
     def check_win_at_position(self, row: int, col: int) -> bool:
@@ -91,26 +64,24 @@ class ConnectFourBoard:
         """
         for dy in {-1, 0, 1}:
             for dx in {-1, 0, 1}:
-                if self.alternation(col, row, dx, dy):
+                if self.alternation(row, col, dx, dy):
                     return True
-                pass
         return False
 
     def alternation(self, x: int, y: int, dx: int, dy: int) -> bool:
         """
         Helper function for check_for_win function
         """
-        count = 0
         if dx == 0 and dy == 0:
             return False
         else:
             for i in range(4):
-                if self.valid_move(x, y):
-                    if self.board[x][y] == self.turn:
-                        count += 1
-                        x += dx
-                        y += dy
-            return count == 4
+                if self.valid_move(x, y) and self.board[y][x] == self.turn:
+                    x += dx
+                    y += dy
+                else:
+                    return False
+            return True
 
     def valid_move(self, col: int, row: int) -> bool:
         """
@@ -123,12 +94,23 @@ class ConnectFourBoard:
         """
         check's if the board is filled.
         """
-        count = 0
-        for x in range(len(self.board)):
-            for y in range(len(self.board[x])):
-                if self.board[x][y] != self.em:
-                    count += 1
-        return count == self.dim_row*self.dim_col
+        for y in range(self.dim_col):
+            for x in range(self.dim_row):
+                if self.board[y][x] == self.em:
+                    return False
+        return True
 
+    def get_drop_loc(self, column: int) -> int:
+        """
+        return the location on the board which player can place a pieaces according to column.
+        """
+        for y in range(self.dim_row - 1, -1, -1):
+            if self.board[y][column] == self.em:
+                return y
+        return -1
 
-
+    def __str__(self):
+        final = ""
+        for row in self.board:
+            final += ",".join(row) + "\n"
+        return final
