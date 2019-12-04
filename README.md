@@ -16,8 +16,14 @@ Users interact with the program with a mouse. Once 4-to-Connect is run, a user m
 
 # Code Extension
 
+4-to-Connect does not allow users to view the start page from the play page. To allow this, one can add to the update_screen method so that buttons can beplaced on the screen if self.isPlaying is True.
+
 # Creators
 
 # Individual Contributions
+
+Hafsah Moalim:
+
+I contributed to this project's code by creating the class skeleton for ConnectFourGUI and filling in some of its methods. In particular, I created the help page and start page for the game. In the init method for ConnectFourGUI, I used the Button class to  allow switching between the help and start page. I also made the create_text function  to make text appear on the screen. For the README file, I created section headers and  filled in some of the game controls and code extension sections.
 
 # Licence
