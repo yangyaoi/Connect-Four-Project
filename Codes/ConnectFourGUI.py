@@ -164,17 +164,17 @@ class ConnectFourGUI():
             print(self.decide_column(mouse_position))
         else:
             # if start button is clicked
-            if (394 > mouse_position[0] > 306 and 217 > mouse_position[1] > 190):
+            if (self.start_button.x + self.start_button.width > mouse_position[0] > self.start_button.x and (self.start_button.y + self.start_button.height - 5) > mouse_position[1] > (self.start_button.y + self.start_button.height*0.5 - 5)):
                 self.start_button.clicked = True
                 self.play_game()
 
             # if help button is clicked
-            if (394 > mouse_position[0] > 306 and 274 > mouse_position[1] > 232):
+            if (self.help_button.x + self.help_button.width > mouse_position[0] > self.help_button.x and (self.help_button.y + self.help_button.height - 5) > mouse_position[1] > (self.help_button.y + self.help_button.height*0.5 - 5)):
                 self.help_button.clicked = True
                 self.help_view()
 
             # if exit button is clicked
-            if (394 > mouse_position[0] > 306 and 335 > mouse_position[1] > 295):
+            if (self.exit_button.x + self.exit_button.width > mouse_position[0] > self.exit_button.x and (self.exit_button.y + self.exit_button.height - 5) > mouse_position[1] > (self.exit_button.y + self.exit_button.height*0.5 - 5)):
                 self.exit_button.clicked = True
                 self.exit_game()
 
@@ -190,6 +190,10 @@ class ConnectFourGUI():
         return
 
     def help_view(self):
+        """(ConnectFourGUI) -> NoneType
+        Updates the display to show the help screen when a user presses
+        the help button.
+        """
         self.screen.fill((110, 215, 180))
         # Help text
         help_text = []
@@ -208,7 +212,7 @@ class ConnectFourGUI():
         help_text.append("The disk representing your colour will appear in the last empty slot of the column")
         help_text.append("and the other player can then make a move.")
 
-
+        # create help text and add it to the screen
         create_text("HELP", 350, 50, 'calibri', 50, self.screen, True)
 
         i = 0
@@ -219,16 +223,18 @@ class ConnectFourGUI():
                 create_text(help_text[i], 350, 100 + i*20, 'calibri', 20, self.screen)
             i += 1
 
-        # Start button
-        pygame.draw.ellipse(self.screen, (61, 89, 171), [50, 425, 100, 50])
-        create_text("Start", 100, 450, 'defualt', 20, self.screen, False, (255,255,255))
 
-        # Exit button
-        pygame.draw.ellipse(self.screen, (61, 89, 171), [550, 425, 100, 50])
-        create_text("Exit", 600, 450, 'defualt', 20, self.screen, False, (255,255,255))
-
-
+        # create start and help buttons
+        self.start_button = Button(self.screen, "Start", (61, 89, 171), (0,0,0), (255,255,255), 50, 425, 100, 50, "ellipse", 20)
+        self.exit_button = Button(self.screen, "Exit", (61, 89, 171), (0,0,0), (255,255,255), 550, 425, 100, 50, "ellipse", 20)
+        
+        # place the buttons on the screen
+        self.start_button.place()
+        self.exit_button.place()
+        
+        # update display to show the help view
         pygame.display.update()
+            
 
     def game_over(self,winner:str):
         self.isBoard = False
@@ -253,8 +259,8 @@ class ConnectFourGUI():
     def exit_game(self):
         """(ConnectFourGUI) -> NoneType
         updates the exit screen"""
-        self.screen.fill((255, 255, 255))
-
+        pygame.quit()
+        exit()
         return
 
     def update_board(self, board: ConnectFourBoard):
@@ -274,6 +280,7 @@ class ConnectFourGUI():
         player input
          - Make board look better :(...
         """
+        self.screen.fill(self.BLUE)
         #draw 5 buttons represent number of columns.
         self.isBoard = True
 
