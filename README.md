@@ -8,9 +8,9 @@
 # Installation
 
 # Documentation
-	## Directory Structure
+## Directory Structure
 	
-	## Major Classes and Methods
+## Major Classes and Methods
 
 # Code Extension
 
