@@ -14,6 +14,8 @@ Users interact with the program with a mouse. Once 4-to-Connect is run, a user m
 	
 ## Major Classes and Methods
 
+Major classes of the code used to put together the game application include Main, ConnectFourGUI, ConnectFourBoard, Controller and Button. The Main class includes methods getBoard(), getGUI() and main(), where main() runs the application and connects any adjustments in ConnectFourBoard to the ConnectFourGUI. The ConnectFourGUI includes a few update methods to change the state of the GUI when the game is being played. These methods include updateColumnButtons(), update_screen(), help_view(), play_game(), exit_game(), game_over(), reset_board(), draw_board() and create_text(). The ConnectFourBoard class is used to simulate the gameplay using methods that represents rules in the game such as drop(), check_for_win(), switch_turn() and is_game_over(). There are also helper functions for the board to work, which include check_win_at_position(), alternation(), valid_move(), get_drop_loc(), whos_turn and other_player(). The Controller class acts as a helper class for the GUI, which includes a method called wait_click() that detects clicking events and sends the x and y coordinates to the GUI. The Button class is used as a sensor object for the GUI, where the user can click their mouse and activate a change in the state of the GUI. The Button includes place(), change_colour() and reset_colour() to indicate which player's piece is on that button.
+
 # Code Extension
 
 4-to-Connect does not allow users to view the start page from the play page. To allow this, one can add to the update_screen method so that buttons can beplaced on the screen if self.isPlaying is True.
