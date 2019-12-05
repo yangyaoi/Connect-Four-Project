@@ -9,6 +9,32 @@ Users interact with the program with a mouse. Once 4-to-Connect is run, a user m
 
 # Installation
 
+## System Requirement
+* Windows10/MacOS Catalina/Linux Ubuntu
+* Python 3.7.x
+* Pygame1.9.2 or above
+
+## How to install Python
+1. Download Python 3.7.x from [here](https://www.python.org/downloads/release/python-375/)
+2. Install Python by opening the downloaded file
+3. For Windows user, please do not forget to set environment variable correctly
+
+## How to install Pygame
+1. If you have 'pip' installed, type the following command in terminal/command prompt
+```
+$ pip install pygame
+```
+2. Otherwise, please dowonload get-pip.py [here](https://bootstrap.pypa.io/get-pip.py) and type the following command in terminal/command prompt
+```
+python get-pip.py
+```
+   and go back to step 1
+
+## Download our game
+1. On this page, click "Clone or download" and then choose "Download ZIP"
+2. Extract the zip file and open Codes folder
+3. Double click the file named "ConnectFourGUI.py"
+
 # Documentation
 ## Directory Structure
 	
