@@ -26,7 +26,7 @@ $ pip install pygame
 ```
 2. Otherwise, please dowonload get-pip.py [here](https://bootstrap.pypa.io/get-pip.py) and type the following command in terminal/command prompt
 ```
-python get-pip.py
+$ python get-pip.py
 ```
    and go back to step 1
 
@@ -54,4 +54,6 @@ Hafsah Moalim:
 
 I contributed to this project's code by creating the class skeleton for ConnectFourGUI and filling in some of its methods. In particular, I created the help page and start page for the game. In the init method for ConnectFourGUI, I used the Button class to  allow switching between the help and start page. I also made the create_text function  to make text appear on the screen. For the README file, I created section headers and  filled in some of the game controls and code extension sections.
 
+* Gen Tomita
+	* My main contribution on this project is to write the controller part of our MVC design in GUI class. Since I could not share a pygame object in multiple classes, I have integralated the ability of the controller class into GUI so that the model is updated simultaneously as GUI by user input. I have also debugged some functions in Board class and solved minor bugs such as the timing of increments. For README I wrote the instruction for how to download required dependencies and set up them properly.
 # Licence
